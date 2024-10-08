@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.courtlyproject.R
 
 @Composable
 fun LoginPage() {
@@ -93,7 +95,7 @@ fun LoginPage() {
                     clip = true
                 ),
             colors = ButtonDefaults.buttonColors(
-                containerColor = "#79b791".color
+                containerColor = Color(0xff79b791)
             )
         ) {
             Text(text = "Masuk")
@@ -106,7 +108,7 @@ fun LoginPage() {
             ClickableText(
                 text = AnnotatedString(text = "Daftar"),
                 style = TextStyle(
-                    color = "#79b791".color,
+                    color = Color(0xff79b791),
                     fontSize = 15.sp,
                     textAlign = TextAlign.Center,
                 ),
