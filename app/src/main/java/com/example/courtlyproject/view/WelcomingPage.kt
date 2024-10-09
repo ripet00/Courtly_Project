@@ -26,11 +26,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 
 @Composable
-fun MainScreen() {
+fun WelcomingPage(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -168,10 +169,4 @@ fun LoginLink() {
         color = Color(0xFF8AB17D), // Green shade
         modifier = Modifier.clickable { /* Handle Login Click */ }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MainScreen()
 }
