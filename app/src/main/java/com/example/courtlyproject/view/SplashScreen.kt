@@ -1,4 +1,4 @@
-package com.example.courtlyproject
+package com.example.courtlyproject.view
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -26,6 +26,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.courtlyproject.R
 import kotlinx.coroutines.delay
 
 @Composable
@@ -51,7 +52,7 @@ fun SplashScreen(navController: NavHostController, context: MainActivity) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Image(painter = painterResource(id=R.drawable.courtly),
+        Image(painter = painterResource(id= R.drawable.courtly),
             contentDescription = "logo")
 //        LoaderAnimation(
 //            modifier = Modifier. size(400.dp)
