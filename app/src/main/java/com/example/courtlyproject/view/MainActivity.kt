@@ -1,4 +1,4 @@
-package com.example.courtlyproject
+package com.example.courtlyproject.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
