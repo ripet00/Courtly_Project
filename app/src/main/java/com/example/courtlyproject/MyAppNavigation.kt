@@ -13,7 +13,7 @@ import com.example.courtlyproject.pages.SignupPage
 fun MyAppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "signup", builder = {
+    NavHost(navController = navController, startDestination = "splashscreen"){
         composable("splashscreen") {
             SplashScreen(navController, context = MainActivity())
         }
@@ -26,5 +26,5 @@ fun MyAppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel) 
         composable("first") {
             FirstPage(modifier, navController, authViewModel)
         }
-    })
+    }
 }
