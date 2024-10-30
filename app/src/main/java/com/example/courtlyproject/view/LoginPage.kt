@@ -1,4 +1,4 @@
-package com.example.tugasmobile
+package com.example.courtlyproject.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -33,10 +33,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 @Composable
-fun LoginPage() {
+fun LoginPage(navController : NavController) {
     var nama by remember {
         mutableStateOf("")
     }
@@ -45,7 +46,8 @@ fun LoginPage() {
     }
     Image(
         painter = painterResource(id = R.drawable.group_82__1_),
-        contentDescription = "Atasan"
+        contentDescription = "Atasan",
+
     )
     Column (
         modifier = Modifier
@@ -113,6 +115,7 @@ fun LoginPage() {
                     textAlign = TextAlign.Center,
                 ),
                 onClick = {
+                    navController.navigate("")
                 }
 
             )

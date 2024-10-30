@@ -52,7 +52,7 @@ fun WelcomingPage(navController: NavController) {
         Spacer(modifier = Modifier.height(30.dp))
 
         // Login Link
-        LoginLink()
+        LoginLink(navController = navController)
     }
 }
 
@@ -161,12 +161,14 @@ fun ButtonsSection() {
 }
 
 @Composable
-fun LoginLink() {
+fun LoginLink(navController : NavController) {
     Text(
         text = "Masuk >",
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(0xFF8AB17D), // Green shade
-        modifier = Modifier.clickable { /* Handle Login Click */ }
+        color = Color(0xFF8AB17D),
+        modifier = Modifier.clickable {
+            navController.navigate("LoginPage")
+        }
     )
 }
