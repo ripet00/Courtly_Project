@@ -38,6 +38,9 @@ class MainActivity : ComponentActivity() {
                         composable("LoginPage") {
                             LoginPage(navController)
                         }
+                        composable("HomePage") {
+                            HomeScreen(navController)
+                        }
 //                        composable("Onboarding") {
 //                            OnboardingScreen(navController = navController, context = this@MainActivity)
 //                        }

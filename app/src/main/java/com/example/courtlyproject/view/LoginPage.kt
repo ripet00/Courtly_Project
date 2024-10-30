@@ -88,7 +88,9 @@ fun LoginPage(navController : NavController) {
             label = { Text("Masukkan Kata Sandi", fontSize = 15.sp) }
         )
         Spacer(modifier = Modifier.height(80.dp))
-        Button(onClick ={},
+        Button(onClick ={
+            navController.navigate("HomePage")
+        },
             modifier = Modifier
                 .width(245.dp)
                 .shadow(
