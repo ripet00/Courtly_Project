@@ -30,7 +30,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -63,7 +68,7 @@ fun HomeScreen(navController: NavController) {
         .fillMaxSize()
         .background(color = Color.White)
     ) {
-        TopBar()
+        TopBar(navController)
         SearchBar()
         SportSelection()
         SportPlaceList()
@@ -71,7 +76,7 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavController) {
     Box(
         modifier = Modifier
             .padding(vertical = 16.dp, horizontal = 8.dp)
@@ -106,12 +111,60 @@ fun TopBar() {
                     }
                 }
             }
+            ProfileMenu(navController)
+//            Image(
+//                painter = painterResource(id = R.drawable.nand),
+//                contentDescription = "Profile Picture",
+//                modifier = Modifier
+//                    .size(45.dp)
+//                    .clip(CircleShape)
+//            )
+        }
+    }
+}
+@Composable
+fun ProfileMenu(navController: NavController) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box {
+        IconButton(onClick = { expanded = !expanded }) {
             Image(
-                painter = painterResource(id = R.drawable.nand),
+                painter = painterResource(R.drawable.nand), // Ganti dengan resource foto profil Anda
                 contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
+            )
+        }
+        // Dropdown Menu
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .background(Color(0xFF6FCF97)) // Warna latar menu
+        ) {
+            DropdownMenuItem(
+                text = { Text("Profil", color = Color.White) },
+                onClick = {
+                    expanded = false
+                    // Aksi untuk "Profil"
+                }
+            )
+            HorizontalDivider(color = Color.White)
+            DropdownMenuItem(
+                text = { Text("Pesanan", color = Color.White) },
+                onClick = {
+                    expanded = false
+                    // Aksi untuk "Pesanan"
+                }
+            )
+            HorizontalDivider(color = Color.White)
+            DropdownMenuItem(
+                text = { Text("Keluar", color = Color.White) },
+                onClick = {
+//                    expanded = false,
+                    navController.navigate("welcomingPage")
+                }
             )
         }
     }
