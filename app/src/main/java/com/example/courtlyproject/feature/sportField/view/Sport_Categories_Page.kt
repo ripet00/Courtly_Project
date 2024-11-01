@@ -14,16 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
+import com.example.courtlyproject.feature.componen_ui.SearchBar
 import com.example.courtlyproject.feature.componen_ui.SportPlaceItem
 import com.example.courtlyproject.feature.componen_ui.TopNaviagtion
 import com.example.courtlyproject.feature.sportField.model.SportPlace
 
-
 @Composable
-fun SportCategories(navController: NavController){
+fun SportCategories(){
     val places = listOf(
         SportPlace(
             icon = painterResource(R.drawable.stadium),
@@ -86,6 +87,8 @@ fun SportCategories(navController: NavController){
     ) {
         TopNaviagtion("Basket")
         Spacer(modifier = Modifier.height(20.dp))
+        SearchBar(Context = "Basket")
+        Spacer(modifier = Modifier.height(8.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // Jumlah kolom
             modifier = Modifier
@@ -100,4 +103,10 @@ fun SportCategories(navController: NavController){
             }
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SportCategoriesPreview(){
+    SportCategories()
 }

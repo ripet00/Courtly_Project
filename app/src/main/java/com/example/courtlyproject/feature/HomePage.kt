@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,7 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
-import com.example.courtlyproject.feature.componen_ui.SportPlaceList
+import com.example.courtlyproject.feature.componen_ui.SearchBar
+import com.example.courtlyproject.feature.componen_ui.SportPlaceItem
+import com.example.courtlyproject.feature.sportField.model.SportPlace
 
 
 @Composable
@@ -56,7 +61,7 @@ fun HomeScreen(navController: NavController) {
         .background(color = Color.White)
     ) {
         TopBar(navController)
-        SearchBar()
+        SearchBar(Context = "Pilihanmu")
         SportSelection()
         SportPlaceList()
     }
@@ -151,37 +156,6 @@ fun ProfileMenu(navController: NavController) {
 }
 
 @Composable
-fun SearchBar() {
-    var text by remember { mutableStateOf("") }
-    TextField(
-        value = text,
-        onValueChange = {text = it},
-        placeholder = { Text(
-            text = "Cari olahraga favoritmu",
-            style = TextStyle(
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
-        ) },
-        leadingIcon = {
-            Icon(Icons.Default.Search, contentDescription = null)
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.LightGray,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xFFD9D9D9))
-    )
-}
-
-@Composable
 fun SportSelection() {
     // List olahraga
     val sports = listOf("Futsal", "Bulutangkis", "Golf", "tenis","minisoccer","Volly")
@@ -226,5 +200,79 @@ fun SportButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
             textAlign = TextAlign.Center
         )
     }
+}
+
+@Composable
+fun SportPlaceList(){
+    val places = listOf(
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+        SportPlace(
+            icon = painterResource(R.drawable.stadium),
+            name = "Lapangan Teknik",
+            distance = .10,
+            rating = 4.7,
+            price = "100k/jam"),
+    )
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2), // Jumlah kolom
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        content = {
+            items(places) { place ->
+                SportPlaceItem(place) // Konten setiap item
+            }
+        }
+    )
 }
 
