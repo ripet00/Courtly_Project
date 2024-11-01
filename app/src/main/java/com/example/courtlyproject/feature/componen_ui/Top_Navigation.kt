@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view.componen_ui
+package com.example.courtlyproject.feature.componen_ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

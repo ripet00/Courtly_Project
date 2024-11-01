@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view
+package com.example.courtlyproject.feature.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view
+package com.example.courtlyproject.feature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
-import com.example.courtlyproject.view.componen_ui.SportPlaceList
+import com.example.courtlyproject.feature.componen_ui.SportPlaceList
 
 
 @Composable

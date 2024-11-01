@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view.componen_ui
+package com.example.courtlyproject.feature.componen_ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -30,34 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.courtlyproject.R
-import com.example.courtlyproject.model.SportPlace
+import com.example.courtlyproject.feature.sportField.model.SportPlace
 
-@Composable
-fun SportPlaceList() {
-    val places = listOf(
-        SportPlace("Lapangan Teknik", 1.10, 4.7, "100k/jam"),
-        SportPlace("Lapangan Somba Opu", 3.52, 4.7, "80k/jam"),
-        SportPlace("Lapangan Keren", 2.50, 4.7, "100k/jam"),
-        SportPlace("Lapangan Ramtek", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan PSM", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Unhas", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Mawang", 1.32, 4.7, "90k/jam")
-    )
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // Jumlah kolom
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        content = {
-            items(places) { place ->
-                SportPlaceItem(place) // Konten setiap item
-            }
-        }
-    )
-}
 
 @Composable
 fun SportPlaceItem(place: SportPlace) {
@@ -74,7 +45,7 @@ fun SportPlaceItem(place: SportPlace) {
         ) {
             Column(modifier = Modifier.padding(0.dp)) {
                 Image(
-                    painter = painterResource(id = R.drawable.stadium),
+                    painter = place.icon,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
