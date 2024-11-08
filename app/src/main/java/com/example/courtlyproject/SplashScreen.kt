@@ -46,12 +46,12 @@ fun SplashScreen(navController: NavHostController, context: MainActivity) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xff1B4531))
+            .background(color = Color(0xff79B791))
         , verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Image(painter = painterResource(id=R.drawable.courtly),
+        Image(painter = painterResource(id=R.drawable.logo_courtly),
             contentDescription = "logo")
 //        LoaderAnimation(
 //            modifier = Modifier. size(400.dp)
