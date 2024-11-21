@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.courtlyproject.pages.FirstPage
 import com.example.courtlyproject.pages.LoginPage
 import com.example.courtlyproject.pages.SignupPage
+import com.example.courtlyproject.view.MainActivity
 
 @Composable
 fun MyAppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel) {
