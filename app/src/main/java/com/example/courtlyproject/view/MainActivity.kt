@@ -30,8 +30,6 @@ class MainActivity : ComponentActivity() {
 
                     MyAppNavigation(authViewModel = AuthViewModel(),navController = navController)
                 }
-
-
             }
         }
     }

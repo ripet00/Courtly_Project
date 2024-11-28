@@ -8,10 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.courtlyproject.AuthViewModel
 import com.example.courtlyproject.SplashScreen
-import com.example.courtlyproject.pages.LoginPage
 import com.example.courtlyproject.pages.SignupPage
 import com.example.courtlyproject.pages.WelcomingPage
 import com.example.courtlyproject.view.HomeScreen
+import com.example.courtlyproject.pages.LoginPage
 import com.example.courtlyproject.view.MainActivity
 
 @Composable
@@ -26,7 +26,7 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel,
             WelcomingPage( navController)
         }
         composable("login") {
-            LoginPage(modifier, navController, authViewModel)
+            LoginPage(navController)
         }
         composable("signup") {
             SignupPage(modifier, navController, authViewModel)

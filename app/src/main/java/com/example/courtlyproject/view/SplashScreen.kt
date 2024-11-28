@@ -32,18 +32,15 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController, context: MainActivity) {
 
-
     val alpha = remember {
         Animatable(0f)
     }
-
     LaunchedEffect(key1 = true) {
         alpha.animateTo(1f, animationSpec = tween(2500))
-        delay(4000)
+        delay(3000)
         navController.popBackStack() // to close the splash screen after finish, so if we go back from onboarding screen it will automatically show your desktop
         navController.navigate("welcomingPage")
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,15 +48,14 @@ fun SplashScreen(navController: NavHostController, context: MainActivity) {
         , verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Image(painter = painterResource(id=R.drawable.logo_courtly),
             contentDescription = "logo")
 //        LoaderAnimation(
 //            modifier = Modifier. size(400.dp)
 //            ,anim = R.raw.mobile_app
 //        )
-        Spacer(modifier = Modifier.height(25.dp))
-        Text(text = "Let's make an App", modifier = Modifier.alpha(alpha.value) ,fontSize = 32.sp, color = Color.White)
+//        Spacer(modifier = Modifier.height(25.dp))
+//        Text(text = "Let's make an App", modifier = Modifier.alpha(alpha.value) ,fontSize = 32.sp, color = Color.White)
     }
 }
 
