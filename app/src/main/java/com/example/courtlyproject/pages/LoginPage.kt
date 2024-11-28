@@ -87,7 +87,9 @@ fun LoginPage(modifier: Modifier = Modifier, navController: NavController, authV
             label = { Text("Masukkan Kata Sandi", fontSize = 15.sp) }
         )
         Spacer(modifier = Modifier.height(80.dp))
-        Button(onClick ={},
+        Button(onClick ={
+            navController.navigate("HomePage")
+        },
             modifier = Modifier.width(245.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff79b791)
