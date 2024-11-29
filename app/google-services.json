@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "355243625225",
+    "project_id": "courtly-4ebe6",
+    "storage_bucket": "courtly-4ebe6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355243625225:android:4d447121ae7b97b729e1d8",
+        "android_client_info": {
+          "package_name": "com.example.courtlyproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWeQ2H-OxqbUroAhsWrZK6KWmagyZm6GY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

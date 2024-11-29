@@ -41,7 +41,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,17 +60,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.courtlyproject.AuthState
+import com.example.courtlyproject.AuthViewModel
 import com.example.courtlyproject.R
 import com.example.courtlyproject.model.SportPlace
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
+
+    val authState = authViewModel.authState.observeAsState()
+
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Unauthenticated -> navController.navigate("login")
+            else -> Unit
+        }
+    }
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.White)
     ) {
-        TopBar(navController)
+        TopBar(navController,authViewModel)
         SearchBar()
         SportSelection()
         SportPlaceList()
@@ -76,7 +90,7 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun TopBar(navController: NavController) {
+fun TopBar(navController: NavController,authViewModel: AuthViewModel) {
     Box(
         modifier = Modifier
             .padding(vertical = 16.dp, horizontal = 8.dp)
@@ -111,20 +125,14 @@ fun TopBar(navController: NavController) {
                     }
                 }
             }
-            ProfileMenu(navController)
-//            Image(
-//                painter = painterResource(id = R.drawable.nand),
-//                contentDescription = "Profile Picture",
-//                modifier = Modifier
-//                    .size(45.dp)
-//                    .clip(CircleShape)
-//            )
+            ProfileMenu(navController, authViewModel)
         }
     }
 }
 @Composable
-fun ProfileMenu(navController: NavController) {
+fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
     var expanded by remember { mutableStateOf(false) }
+    val authState = authViewModel.authState.observeAsState()
 
     Box {
         IconButton(onClick = { expanded = !expanded }) {
@@ -162,8 +170,7 @@ fun ProfileMenu(navController: NavController) {
             DropdownMenuItem(
                 text = { Text("Keluar", color = Color.White) },
                 onClick = {
-//                    expanded = false,
-                    navController.navigate("welcomingPage")
+                    authViewModel.signout()
                 }
             )
         }
@@ -204,7 +211,7 @@ fun SearchBar() {
 @Composable
 fun SportSelection() {
     // List olahraga
-    val sports = listOf("Futsal", "Bulutangkis", "Golf", "tenis","minisoccer","Volly")
+    val sports = listOf("Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
     // State untuk olahraga yang dipilih
     var selectedSport by remember { mutableStateOf(sports[0]) }
 

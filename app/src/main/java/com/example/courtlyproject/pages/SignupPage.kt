@@ -1,5 +1,6 @@
 package com.example.courtlyproject.pages
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +18,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,10 +31,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.courtlyproject.AuthState
 import com.example.courtlyproject.AuthViewModel
 import com.example.courtlyproject.R
 
@@ -40,33 +45,36 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
     var email by remember {
         mutableStateOf("")
     }
-    var username by rememberSaveable {
-        mutableStateOf("")
-    }
+//    var username by rememberSaveable {
+//        mutableStateOf("")
+//    }
     var password by rememberSaveable {
         mutableStateOf("")
     }
-    var repeat_password by rememberSaveable {
-        mutableStateOf("")
+//    var repeat_password by rememberSaveable {
+//        mutableStateOf("")
+//    }
+//    var no_hp by rememberSaveable {
+//        mutableStateOf("")
+//    }
+
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("homepage")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message,
+                Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
     }
-    var no_hp by rememberSaveable {
-        mutableStateOf("")
-    }
+
 
     Column(
         modifier = Modifier
             .fillMaxSize(),
-            // Mengisi ukuran layar penuh
-//            .height(LocalConfiguration.current.screenHeightDp.dp / 5)
-//            .clip(
-//                RoundedCornerShape(
-//                    bottomStart = 80.dp,
-//                    bottomEnd = 0.dp,
-//                    topStart = 0.dp,
-//                    topEnd = 0.dp
-//                )
-//            )
-//            .background(Color(0xff79b791))
     ) {
         Image(
             painter = painterResource(id = R.drawable.group_82__1_),
@@ -94,26 +102,19 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
                     isNotEmpty = email.isNotEmpty()
                 },
                 label = { Text("Masukkan Email", fontSize = 15.sp) },
-//            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                //backgroundColor = if (isNotEmpty) Color.White else Color.Gray,
-//                //textColor = if (isNotEmpty) Color.Black else Color.DarkGray,
-//                focusedBorderColor = Color.Green,
-//                unfocusedBorderColor = Color.Gray,
-//            ),
                 shape = RoundedCornerShape(32.dp)
             )
             Spacer(modifier = Modifier.height(6.dp))
 
-            OutlinedTextField(
-                value = username,
-                onValueChange = { username = it},
-                label = { Text("Nama Pengguna", fontSize = 15.sp) },
-
-                shape = RoundedCornerShape(32.dp)
-
-            )
-            Spacer(modifier = Modifier.height(6.dp))
+//            OutlinedTextField(
+//                value = username,
+//                onValueChange = { username = it},
+//                label = { Text("Nama Pengguna", fontSize = 15.sp) },
+//
+//                shape = RoundedCornerShape(32.dp)
+//
+//            )
+//            Spacer(modifier = Modifier.height(6.dp))
 
             OutlinedTextField(
                 value = password,
@@ -124,28 +125,32 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
             )
             Spacer(modifier = Modifier.height(6.dp))
 
-            OutlinedTextField(
-                value = repeat_password,
-                onValueChange = { repeat_password = it},
-                label = { Text("Masukkan ulang kata sandi", fontSize = 15.sp) },
-
-                shape = RoundedCornerShape(32.dp)
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-
-            OutlinedTextField(
-                value = no_hp,
-                onValueChange = { no_hp = it},
-                label = { Text("No Handphone", fontSize = 15.sp) },
-
-                shape = RoundedCornerShape(32.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+//            OutlinedTextField(
+//                value = repeat_password,
+//                onValueChange = { repeat_password = it},
+//                label = { Text("Masukkan ulang kata sandi", fontSize = 15.sp) },
+//
+//                shape = RoundedCornerShape(32.dp)
+//            )
+//            Spacer(modifier = Modifier.height(6.dp))
+//
+//            OutlinedTextField(
+//                value = no_hp,
+//                onValueChange = { no_hp = it},
+//                label = { Text("No Handphone", fontSize = 15.sp) },
+//
+//                shape = RoundedCornerShape(32.dp)
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = {navController.navigate("login")},
-                modifier = Modifier.clip(RoundedCornerShape(8.dp)),
-                colors = ButtonDefaults.buttonColors(Color(0xff79b791))
+                onClick = {
+                    authViewModel.signup(email,password)
+                          },
+                enabled = authState.value != AuthState.Loading,
+                modifier = Modifier.clip(RoundedCornerShape(4.dp)),
+                colors = ButtonDefaults.buttonColors(Color(0xff79b791)),
+
             ) {
                 Text(text = "Daftar", color = Color.White)
             }
