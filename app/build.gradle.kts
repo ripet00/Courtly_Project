@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -31,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -62,6 +64,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,10 +73,19 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation (libs.hilt.android)
+    implementation (libs.androidx.hilt.navigation.compose)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.play.services.auth)
+    implementation(libs.coil.compose)
+    implementation (platform(libs.firebase.bom))
+    implementation (libs.firebase.auth.ktx)
+    implementation (libs.play.services.auth.v2070)
 
     // lottie
-    implementation("com.airbnb.android:lottie-compose:5.2.0")
+    implementation(libs.lottie.compose)
 
     // navigatioin
-    implementation("androidx.navigation:navigation-compose:2.7.3")
+    implementation(libs.androidx.navigation.compose)
 }
