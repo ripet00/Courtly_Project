@@ -1,13 +1,8 @@
 package com.example.courtlyproject.auth
 
-import android.provider.Settings.Global.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.courtlyproject.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,8 +44,8 @@ class AuthViewModel : ViewModel() {
             }
     }
 
-    fun signup(username: String, email: String, password: String, nomorHp: String) {
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || nomorHp.isEmpty()) {
+    fun signup(username: String, email: String, password: String, repeatPassword:String, nomorHp: String) {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || nomorHp.isEmpty()) {
             _authState.value = AuthState.Error("Semua field harus diisi")
             return
         }

@@ -77,10 +77,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Column (modifier = Modifier.fillMaxSize()){
         // Header Image
         Image(
             painter = painterResource(id = R.drawable.group_82__1_),
@@ -88,94 +85,99 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop,
         )
+        Spacer(modifier = Modifier.height(70.dp))
 
-        Spacer(modifier = Modifier.height(40.dp))
-
-        // Login Title
-        Text(
-            text = "Silahkan Masuk",
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Masukkan akun yang pernah kamu daftar!", fontSize = 15.sp)
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Email Input
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Masukkan Email") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(32.dp)
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // Password Input
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Masukkan Kata Sandi") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(32.dp)
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        // Login Button
-        Button(
-            onClick = { authViewModel.login(email, password) },
-            enabled = authState.value != AuthState.Loading,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791))
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 46.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Masuk", fontSize = 16.sp, color = Color.White)
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
+            // Login Title
+            Text(
+                text = "Silahkan Masuk",
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Masukkan akun yang pernah kamu daftar!", fontSize = 15.sp)
 
-        // Divider Text
-        Text(text = "-- Atau --", fontSize = 14.sp, color = Color.Gray)
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(10.dp))
+            // Email Input
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Masukkan Email") },
+                shape = RoundedCornerShape(32.dp)
+            )
 
-        // Google Sign-In Button
-        Button(
-            onClick = { googleSignInLauncher.launch(googleSignInClient.signInIntent) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791))
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically ) {
-                Image(
-                    painter = painterResource(id = R.drawable.goolgelogo),
-                    contentDescription = "Google Logo",
-                    modifier = Modifier.size(24.dp)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Password Input
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Masukkan Kata Sandi") },
+                visualTransformation = PasswordVisualTransformation(),
+                shape = RoundedCornerShape(32.dp)
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Login Button
+            Button(
+                onClick = { authViewModel.login(email, password) },
+                enabled = authState.value != AuthState.Loading,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791))
+            ) {
+                Text(text = "Masuk", fontSize = 16.sp, color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Divider Text
+            Text(text = "-- Atau --", fontSize = 14.sp, color = Color.Gray)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Google Sign-In Button
+            Button(
+                onClick = { googleSignInLauncher.launch(googleSignInClient.signInIntent) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791))
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.goolgelogo),
+                        contentDescription = "Google Logo",
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Masuk dengan Google", fontSize = 15.sp, color = Color.White)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Signup Link
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Belum punya akun?", fontSize = 15.sp)
+                Spacer(modifier = Modifier.width(4.dp))
+                ClickableText(
+                    text = AnnotatedString("Daftar"),
+                    style = TextStyle(color = Color(0xFF79B791), fontSize = 15.sp),
+                    onClick = { navController.navigate("signup") }
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Masuk dengan Google", fontSize = 15.sp, color = Color.White)
             }
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Signup Link
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Belum punya akun?", fontSize = 15.sp)
-            Spacer(modifier = Modifier.width(4.dp))
-            ClickableText(
-                text = AnnotatedString("Daftar"),
-                style = TextStyle(color = Color(0xFF79B791), fontSize = 15.sp),
-                onClick = { navController.navigate("signup") }
-            )
-        }
     }
+
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,8 +50,9 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
     var email by remember { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var repeat_password by rememberSaveable { mutableStateOf("") }
+    var repeatPassword by rememberSaveable { mutableStateOf("") }
     var nomorHp by rememberSaveable { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
 
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
@@ -114,9 +117,13 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
             )
             Spacer(modifier = Modifier.height(4.dp))
 
+            if (errorMessage.isNotEmpty() && repeatPassword.isNotEmpty()) {
+                Text(text = errorMessage, color = MaterialTheme.colorScheme.error, fontStyle = FontStyle.Italic)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
             OutlinedTextField(
-                value = repeat_password,
-                onValueChange = { repeat_password = it },
+                value = repeatPassword,
+                onValueChange = { repeatPassword = it },
                 label = { Text("Masukkan ulang kata sandi", fontSize = 15.sp) },
                 shape = RoundedCornerShape(32.dp)
             )
@@ -133,7 +140,17 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
             // Sign Up Button
             Button(
                 onClick = {
-                    authViewModel.signup(username, email, password, nomorHp)
+                    if(password == repeatPassword){
+                        authViewModel.signup(
+                            username = username,
+                            email = email,
+                            password = password,
+                            repeatPassword = repeatPassword,
+                            nomorHp = nomorHp
+                        )
+                    }else{
+                        errorMessage = "Konfirmasi Password Tidak sesuai"
+                    }
                 },
                 enabled = authState.value != AuthState.Loading,
                 modifier = Modifier
