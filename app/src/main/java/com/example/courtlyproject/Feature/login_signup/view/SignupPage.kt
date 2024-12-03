@@ -1,4 +1,4 @@
-package com.example.courtlyproject.pages
+package com.example.courtlyproject.Feature.login_signup.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
