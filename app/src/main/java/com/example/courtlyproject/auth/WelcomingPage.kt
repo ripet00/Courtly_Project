@@ -1,4 +1,4 @@
-package com.example.courtlyproject.pages
+package com.example.courtlyproject.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -103,7 +103,7 @@ fun DescriptionText() {
         text = "Temukan lapangan impianmu. Reservasi mudah, main lebih seru!",
         fontSize =20.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(0xFF8AB17D), // Green shade
+        color = Color(0xFF79B791),
         textAlign = TextAlign.Center,
         modifier = Modifier.width(250.dp)
     )
@@ -125,7 +125,7 @@ fun ButtonsSection(navController: NavController) {
                 clip = true
             ),
         shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8AB17D)) // Green color
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791)) // Green color
     ) {
         Text(text = "Daftar", fontSize = 15.sp, color = Color.White)
     }
@@ -145,7 +145,7 @@ fun ButtonsSection(navController: NavController) {
                 clip = true
             ),
         shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8AB17D)) // Green color
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF79B791)) // Green color
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -167,9 +167,9 @@ fun LoginLink(navController : NavController) {
         text = "Masuk >",
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(0xFF8AB17D),
+        color = Color(0xFF79B791),
         modifier = Modifier.clickable {
-            navController.navigate("LoginPage")
+            navController.navigate("Login")
         }
     )
 }
