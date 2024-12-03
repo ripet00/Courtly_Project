@@ -55,8 +55,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.courtlyproject.auth.AuthState
-import com.example.courtlyproject.auth.AuthViewModel
+import com.example.courtlyproject.Feature.auth.AuthState
+import com.example.courtlyproject.Feature.auth.AuthViewModel
 import com.example.courtlyproject.R
 import com.example.courtlyproject.model.SportPlace
 
@@ -80,7 +80,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
         TopBar(navController,authViewModel)
         SearchBar()
         SportSelection()
-        SportPlaceList()
+        SportPlaceList(navController)
     }
 }
 
@@ -251,7 +251,7 @@ fun SportButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SportPlaceList() {
+fun SportPlaceList(navController: NavController) {
     val places = listOf(
         SportPlace("Lapangan Teknik", 1.10, 4.7, "100k/jam"),
         SportPlace("Lapangan Somba Opu", 3.52, 4.7, "80k/jam"),
@@ -276,14 +276,15 @@ fun SportPlaceList() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         content = {
             items(places) { place -> // Mengisi grid dengan 100 item
-                SportPlaceItem(place) // Konten setiap item
+                SportPlaceItem(place = place, navController = navController) // Konten setiap item
             }
         }
     )
 }
 
 @Composable
-fun SportPlaceItem(place: SportPlace) {
+fun SportPlaceItem(place: SportPlace, navController: NavController) {
+
     Row (
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center
@@ -291,7 +292,10 @@ fun SportPlaceItem(place: SportPlace) {
         Card(
             modifier = Modifier
                 .width(180.dp)
-                .padding(8.dp),
+                .padding(8.dp)
+                .clickable {
+                    navController.navigate("detail")
+                },
             elevation = CardDefaults.cardElevation(4.dp),
             shape = RoundedCornerShape(22.dp)
         ) {

@@ -1,4 +1,4 @@
-package com.example.courtlyproject.auth
+package com.example.courtlyproject.Feature.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -66,7 +66,9 @@ class AuthViewModel : ViewModel() {
                             _authState.value = AuthState.Authenticated
                         }
                         .addOnFailureListener { exception ->
-                            _authState.value = AuthState.Error(exception.message ?: "Gagal menyimpan data pengguna")
+                            _authState.value = AuthState.Error(
+                                exception.message ?: "Gagal menyimpan data pengguna"
+                            )
                         }
                 }
             } else {
