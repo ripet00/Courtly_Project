@@ -117,7 +117,7 @@ fun top(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Display the price
+            // Display the pr
             Text(
                 text = "Harga: ${getDetail.harga.toString()}",
                 style = MaterialTheme.typography.bodyLarge.copy(
