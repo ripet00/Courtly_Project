@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,10 +62,35 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.auth)
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.firebase.firestore.ktx)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth.ktx)
+    implementation(libs.google.firebase.firestore.ktx)
+
+    // Google Play Services
     implementation(libs.googleid)
+    implementation(libs.play.services.auth)
+
+    // Hilt
+    implementation(libs.hilt.android.v249)
+    implementation(libs.androidx.runtime.livedata)
+    kapt(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Coroutine
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Lottie
+    implementation(libs.lottie.compose)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,19 +98,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation (libs.hilt.android)
-    implementation (libs.androidx.hilt.navigation.compose)
-    kapt (libs.hilt.android.compiler)
-    implementation (libs.kotlinx.coroutines.android)
-    implementation (libs.play.services.auth)
-    implementation(libs.coil.compose)
-    implementation (platform(libs.firebase.bom))
-    implementation (libs.firebase.auth.ktx)
-    implementation (libs.play.services.auth.v2070)
-
-    // lottie
-    implementation(libs.lottie.compose)
-
-    // navigatioin
-    implementation(libs.androidx.navigation.compose)
 }

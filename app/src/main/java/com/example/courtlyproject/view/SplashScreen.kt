@@ -20,6 +20,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.courtlyproject.MainActivity
 import com.example.courtlyproject.R
 import kotlinx.coroutines.delay
 

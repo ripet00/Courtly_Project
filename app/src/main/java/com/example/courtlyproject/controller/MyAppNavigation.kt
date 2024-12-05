@@ -5,13 +5,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.courtlyproject.auth.AuthViewModel
 import com.example.courtlyproject.view.SplashScreen
-import com.example.courtlyproject.auth.SignupPage
-import com.example.courtlyproject.auth.WelcomingPage
+import com.example.courtlyproject.auth.presentation.view.SignupPage
+import com.example.courtlyproject.auth.presentation.view.WelcomingPage
 import com.example.courtlyproject.view.HomeScreen
-import com.example.courtlyproject.auth.LoginPage
-import com.example.courtlyproject.view.MainActivity
+import com.example.courtlyproject.auth.presentation.view.LoginPage
+import com.example.courtlyproject.MainActivity
+import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
 
 @Composable
 fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {

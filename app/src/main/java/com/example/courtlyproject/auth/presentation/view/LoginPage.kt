@@ -1,4 +1,4 @@
-package com.example.courtlyproject.auth
+package com.example.courtlyproject.auth.presentation.view
 
 import android.util.Log
 import android.widget.Toast
@@ -10,10 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -22,21 +20,23 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
+import com.example.courtlyproject.auth.presentation.viewModel.AuthState
+import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 @Composable
-fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
+fun LoginPage(navController: NavController, authViewModel: AuthViewModel  = hiltViewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel.authState.collectAsState()
     val context = LocalContext.current
 
     // Configure Google Sign-In
@@ -54,13 +54,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
             if (account != null) {
                 val idToken = account.idToken
                 if (idToken != null) {
-                    authViewModel.signInWithGoogle(idToken) { success, error ->
-                        if (success) {
-                            Log.d("LoginPage", "Google Sign-In Successful")
-                        } else {
-                            Log.e("LoginPage", "Google Sign-In Failed: $error")
-                        }
-                    }
+                    authViewModel.loginWithGoogle(idToken)
                 }
             }
         } catch (e: Exception) {
@@ -77,7 +71,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
         }
     }
 
-    Column (modifier = Modifier.fillMaxSize()){
+    Column(modifier = Modifier.fillMaxSize()) {
         // Header Image
         Image(
             painter = painterResource(id = R.drawable.group_82__1_),
@@ -127,7 +121,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
 
             // Login Button
             Button(
-                onClick = { authViewModel.login(email, password) },
+                onClick = { authViewModel.loginWithEmail(email, password) },
                 enabled = authState.value != AuthState.Loading,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -179,5 +173,4 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
             }
         }
     }
-
 }

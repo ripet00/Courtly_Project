@@ -38,6 +38,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -54,21 +55,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.courtlyproject.auth.AuthState
-import com.example.courtlyproject.auth.AuthViewModel
 import com.example.courtlyproject.R
+import com.example.courtlyproject.auth.presentation.viewModel.AuthState
+import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.model.SportPlace
 
 
 @Composable
-fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
+fun HomeScreen(navController: NavController,authViewModel: AuthViewModel ) {
 
-    val authState = authViewModel.authState.observeAsState()
+    val authState by authViewModel.authState.collectAsState()
 
-    LaunchedEffect(authState.value) {
-        when(authState.value){
-            is AuthState.Unauthenticated -> navController.navigate("login")
+    LaunchedEffect(authState) {
+        when(authState){
+            is AuthState.UnAuthenticated -> navController.navigate("login")
             else -> Unit
         }
     }
@@ -127,7 +129,7 @@ fun TopBar(navController: NavController,authViewModel: AuthViewModel) {
 @Composable
 fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
     var expanded by remember { mutableStateOf(false) }
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel.authState.collectAsState()
 
     Box {
         IconButton(onClick = { expanded = !expanded }) {
