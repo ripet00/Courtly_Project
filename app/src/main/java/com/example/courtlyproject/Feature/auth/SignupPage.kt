@@ -1,4 +1,4 @@
-package com.example.courtlyproject.auth
+package com.example.courtlyproject.Feature.auth
 
 import android.app.Activity
 import android.widget.Toast

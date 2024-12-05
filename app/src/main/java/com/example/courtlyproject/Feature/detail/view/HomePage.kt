@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view
+package com.example.courtlyproject.Feature.detail.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -54,9 +54,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.courtlyproject.auth.AuthState
-import com.example.courtlyproject.auth.AuthViewModel
+import com.example.courtlyproject.Feature.auth.AuthState
+import com.example.courtlyproject.Feature.auth.AuthViewModel
+import com.example.courtlyproject.Feature.detail.viewmodel.HomePage_vm
 import com.example.courtlyproject.R
 import com.example.courtlyproject.model.SportPlace
 
@@ -70,6 +72,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
         when(authState.value){
             is AuthState.Unauthenticated -> navController.navigate("login")
             else -> Unit
+
         }
     }
 
@@ -80,7 +83,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
         TopBar(navController,authViewModel)
         SearchBar()
         SportSelection()
-        SportPlaceList()
+        SportPlaceList(navController)
     }
 }
 
@@ -251,16 +254,23 @@ fun SportButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SportPlaceList() {
-    val places = listOf(
-        SportPlace("Lapangan Teknik", 1.10, 4.7, "100k/jam"),
-        SportPlace("Lapangan Somba Opu", 3.52, 4.7, "80k/jam"),
-        SportPlace("Lapangan Keren", 2.50, 4.7, "100k/jam"),
-        SportPlace("Lapangan Ramtek", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan PSM", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Unhas", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Mawang", 1.32, 4.7, "90k/jam")
-    )
+fun SportPlaceList(navController: NavController) {
+//    val listLapangan = viewmodel.stateLapangan
+    val viewModel: HomePage_vm = viewModel()
+
+    val places = mutableListOf<SportPlace>()
+    viewModel.stateLapangan.forEachIndexed { index, detaillapangan ->
+        places.add(
+            SportPlace(
+                name = detaillapangan.nama,
+                kategori = detaillapangan.kategori,
+                rating = detaillapangan.rating.toDouble(),
+                price = detaillapangan.harga,
+                id = detaillapangan.id
+
+            )
+        )
+    }
 
 //    LazyColumn(contentPadding = PaddingValues(16.dp)) {
 //        items(places) { place ->
@@ -276,14 +286,15 @@ fun SportPlaceList() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         content = {
             items(places) { place -> // Mengisi grid dengan 100 item
-                SportPlaceItem(place) // Konten setiap item
+                SportPlaceItem(place = place, navController = navController, lapanganId = place.id) // Konten setiap item
             }
         }
     )
 }
 
 @Composable
-fun SportPlaceItem(place: SportPlace) {
+fun SportPlaceItem(place: SportPlace, navController: NavController, lapanganId: String) {
+
     Row (
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center
@@ -291,7 +302,10 @@ fun SportPlaceItem(place: SportPlace) {
         Card(
             modifier = Modifier
                 .width(180.dp)
-                .padding(8.dp),
+                .padding(8.dp)
+                .clickable {
+                    navController.navigate("detail/$lapanganId")
+                },
             elevation = CardDefaults.cardElevation(4.dp),
             shape = RoundedCornerShape(22.dp)
         ) {
@@ -313,14 +327,18 @@ fun SportPlaceItem(place: SportPlace) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = place.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${place.distance} km", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Text(text = "${place.kategori}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFD700))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(text = "${place.rating}")
-                        Spacer(modifier = Modifier.width(32.dp))
-                        Text(text = place.price, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                        Spacer(modifier = Modifier.width(15.dp))
+
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(text = "Rp.${place.price.toString()}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     }
                 }
             }
