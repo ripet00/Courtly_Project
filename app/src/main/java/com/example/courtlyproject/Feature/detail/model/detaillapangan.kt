@@ -5,7 +5,11 @@ data class detaillapangan(
     val kategori: List<String> = listOf(""),
     val alamat: String = "",
     val jadwal: String = "",
-    val harga: Int = 0
+    val harga: Int = 0,
+    val rating: Double = 0.0,
+
+    var id: String = ""
+
 
     )
 
