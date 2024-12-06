@@ -155,16 +155,14 @@ fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
                 text = { Text("Profil", color = Color.White) },
 
                 onClick = {
-                    expanded = false
-                    // Aksi untuk "Profil"
+                    navController.navigate("userprofile")
                 }
             )
             HorizontalDivider(color = Color.White)
             DropdownMenuItem(
                 text = { Text("Pesanan", color = Color.White) },
                 onClick = {
-                    expanded = false
-                    // Aksi untuk "Pesanan"
+                   navController.navigate("user order")
                 }
             )
             HorizontalDivider(color = Color.White)

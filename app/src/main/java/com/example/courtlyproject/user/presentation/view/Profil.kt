@@ -28,10 +28,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 @Composable
-fun UserProfileScreen() {
+fun UserProfileScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -187,9 +188,9 @@ fun ActionButton(icon: ImageVector, label: String, color: Color) {
 
 
 
-@Preview(showBackground = true,
-    showSystemUi = true)
-@Composable
-private fun ProfilPreview(){
-    UserProfileScreen()
-}
+//@Preview(showBackground = true,
+//    showSystemUi = true)
+//@Composable
+//private fun ProfilPreview(){
+//    UserProfileScreen()
+//}

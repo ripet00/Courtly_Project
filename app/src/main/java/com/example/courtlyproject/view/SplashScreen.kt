@@ -34,7 +34,7 @@ fun SplashScreen(navController: NavHostController, context: MainActivity) {
         alpha.animateTo(1f, animationSpec = tween(2500))
         delay(3000)
         navController.popBackStack() // to close the splash screen after finish, so if we go back from onboarding screen it will automatically show your desktop
-        navController.navigate("welcomingpage")
+        navController.navigate("welcoming page")
     }
     Column(
         modifier = Modifier

@@ -31,10 +31,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 @Composable
-fun PesananScreen() {
+fun PesananScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderSection()
         TitleSection()
@@ -183,11 +184,11 @@ fun OrderList() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun pesananPreview(){
-    PesananScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun pesananPreview(){
+//    PesananScreen()
+//}
 
 
 
