@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/com/example/courtlyproject/Feature/auth/presentation/view/SignupPage.kt
 package com.example.courtlyproject.auth.presentation.view
+========
+package com.example.courtlyproject.Feature.auth
+>>>>>>>> b4e276c5b77348a25aa09c6cf919fea67c156adb:app/src/main/java/com/example/courtlyproject/Feature/auth/SignupPage.kt
 
 import android.app.Activity
 import android.widget.Toast
@@ -43,8 +47,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
 import com.example.courtlyproject.auth.domain.model.User
-import com.example.courtlyproject.auth.presentation.viewModel.AuthState
-import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

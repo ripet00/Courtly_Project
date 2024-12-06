@@ -1,4 +1,4 @@
-package com.example.courtlyproject.auth.presentation.viewModel
+package com.example.courtlyproject.feature.auth.presentation.viewModel
 
 
 import androidx.lifecycle.ViewModel

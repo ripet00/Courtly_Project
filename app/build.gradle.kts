@@ -75,6 +75,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android.v249)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.crashlytics.buildtools)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

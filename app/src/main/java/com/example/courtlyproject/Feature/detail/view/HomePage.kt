@@ -1,4 +1,4 @@
-package com.example.courtlyproject.view
+package com.example.courtlyproject.Feature.detail.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,7 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,23 +54,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.courtlyproject.Feature.detail.viewmodel.HomePage_vm
 import com.example.courtlyproject.R
-import com.example.courtlyproject.auth.presentation.viewModel.AuthState
-import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.model.SportPlace
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
 
 
 @Composable
-fun HomeScreen(navController: NavController,authViewModel: AuthViewModel ) {
+fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
 
     val authState by authViewModel.authState.collectAsState()
 
     LaunchedEffect(authState) {
         when(authState){
-            is AuthState.UnAuthenticated -> navController.navigate("login")
+            is com.example.courtlyproject.feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
             else -> Unit
+
         }
     }
 
@@ -82,7 +83,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel ) {
         TopBar(navController,authViewModel)
         SearchBar()
         SportSelection()
-        SportPlaceList()
+        SportPlaceList(navController)
     }
 }
 
@@ -147,9 +148,12 @@ fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .background(Color(0xFF6FCF97)) // Warna latar menu
+                .clip(RoundedCornerShape(16.dp))
+
         ) {
             DropdownMenuItem(
                 text = { Text("Profil", color = Color.White) },
+
                 onClick = {
                     expanded = false
                     // Aksi untuk "Profil"
@@ -208,7 +212,7 @@ fun SearchBar() {
 @Composable
 fun SportSelection() {
     // List olahraga
-    val sports = listOf("Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
+    val sports = listOf("Semua","Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
     // State untuk olahraga yang dipilih
     var selectedSport by remember { mutableStateOf(sports[0]) }
 
@@ -253,16 +257,23 @@ fun SportButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SportPlaceList() {
-    val places = listOf(
-        SportPlace("Lapangan Teknik", 1.10, 4.7, "100k/jam"),
-        SportPlace("Lapangan Somba Opu", 3.52, 4.7, "80k/jam"),
-        SportPlace("Lapangan Keren", 2.50, 4.7, "100k/jam"),
-        SportPlace("Lapangan Ramtek", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan PSM", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Unhas", 1.32, 4.7, "90k/jam"),
-        SportPlace("Lapangan Mawang", 1.32, 4.7, "90k/jam")
-    )
+fun SportPlaceList(navController: NavController) {
+//    val listLapangan = viewmodel.stateLapangan
+    val viewModel: HomePage_vm = viewModel()
+
+    val places = mutableListOf<SportPlace>()
+    viewModel.stateLapangan.forEachIndexed { index, detaillapangan ->
+        places.add(
+            SportPlace(
+                name = detaillapangan.nama,
+                kategori = detaillapangan.kategori,
+                rating = detaillapangan.rating.toDouble(),
+                price = detaillapangan.harga,
+                id = detaillapangan.id
+
+            )
+        )
+    }
 
 //    LazyColumn(contentPadding = PaddingValues(16.dp)) {
 //        items(places) { place ->
@@ -278,14 +289,15 @@ fun SportPlaceList() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         content = {
             items(places) { place -> // Mengisi grid dengan 100 item
-                SportPlaceItem(place) // Konten setiap item
+                SportPlaceItem(place = place, navController = navController, lapanganId = place.id) // Konten setiap item
             }
         }
     )
 }
 
 @Composable
-fun SportPlaceItem(place: SportPlace) {
+fun SportPlaceItem(place: SportPlace, navController: NavController, lapanganId: String) {
+
     Row (
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center
@@ -293,7 +305,10 @@ fun SportPlaceItem(place: SportPlace) {
         Card(
             modifier = Modifier
                 .width(180.dp)
-                .padding(8.dp),
+                .padding(8.dp)
+                .clickable {
+                    navController.navigate("detail/$lapanganId")
+                },
             elevation = CardDefaults.cardElevation(4.dp),
             shape = RoundedCornerShape(22.dp)
         ) {
@@ -315,14 +330,18 @@ fun SportPlaceItem(place: SportPlace) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = place.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${place.distance} km", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Text(text = "${place.kategori}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFD700))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(text = "${place.rating}")
-                        Spacer(modifier = Modifier.width(32.dp))
-                        Text(text = place.price, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                        Spacer(modifier = Modifier.width(15.dp))
+
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(text = "Rp.${place.price.toString()}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     }
                 }
             }

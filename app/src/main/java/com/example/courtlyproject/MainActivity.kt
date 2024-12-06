@@ -11,8 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.courtlyproject.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.controller.MyAppNavigation
+import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.ui.theme.CourtlyProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
 
