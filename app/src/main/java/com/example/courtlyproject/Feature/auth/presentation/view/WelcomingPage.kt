@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/com/example/courtlyproject/Feature/auth/presentation/view/WelcomingPage.kt
+package com.example.courtlyproject.auth.presentation.view
+========
 package com.example.courtlyproject.Feature.auth
+>>>>>>>> b4e276c5b77348a25aa09c6cf919fea67c156adb:app/src/main/java/com/example/courtlyproject/Feature/auth/WelcomingPage.kt
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

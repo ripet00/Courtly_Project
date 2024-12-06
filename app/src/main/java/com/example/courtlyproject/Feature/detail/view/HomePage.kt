@@ -38,8 +38,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,23 +54,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.courtlyproject.Feature.auth.AuthState
-import com.example.courtlyproject.Feature.auth.AuthViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.courtlyproject.Feature.detail.viewmodel.HomePage_vm
 import com.example.courtlyproject.R
+import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.model.SportPlace
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
 
 
 @Composable
 fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
 
-    val authState = authViewModel.authState.observeAsState()
+    val authState by authViewModel.authState.collectAsState()
 
-    LaunchedEffect(authState.value) {
-        when(authState.value){
-            is AuthState.Unauthenticated -> navController.navigate("login")
+    LaunchedEffect(authState) {
+        when(authState){
+            is com.example.courtlyproject.feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
             else -> Unit
 
         }
@@ -130,7 +130,7 @@ fun TopBar(navController: NavController,authViewModel: AuthViewModel) {
 @Composable
 fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
     var expanded by remember { mutableStateOf(false) }
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel.authState.collectAsState()
 
     Box {
         IconButton(onClick = { expanded = !expanded }) {
@@ -155,16 +155,14 @@ fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
                 text = { Text("Profil", color = Color.White) },
 
                 onClick = {
-                    expanded = false
-                    // Aksi untuk "Profil"
+                    navController.navigate("userprofile")
                 }
             )
             HorizontalDivider(color = Color.White)
             DropdownMenuItem(
                 text = { Text("Pesanan", color = Color.White) },
                 onClick = {
-                    expanded = false
-                    // Aksi untuk "Pesanan"
+                   navController.navigate("user order")
                 }
             )
             HorizontalDivider(color = Color.White)
