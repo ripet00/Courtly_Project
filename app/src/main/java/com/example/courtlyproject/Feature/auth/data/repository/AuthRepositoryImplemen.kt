@@ -1,14 +1,15 @@
-package com.example.courtlyproject.auth.data.repository
+package com.example.courtlyproject.Feature.auth.data.repository
 
-import com.example.courtlyproject.auth.domain.model.User
-import com.example.courtlyproject.auth.domain.repository.AuthRepository
+import com.example.courtlyproject.Feature.auth.domain.model.User
+import com.example.courtlyproject.Feature.auth.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import com.example.courtlyproject.util.AppResult
 
-class AuthRepositoryImplemen(firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore) : AuthRepository {
+class AuthRepositoryImplemen(firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore) :
+    AuthRepository {
 
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()

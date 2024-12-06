@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
-import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthState
-import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

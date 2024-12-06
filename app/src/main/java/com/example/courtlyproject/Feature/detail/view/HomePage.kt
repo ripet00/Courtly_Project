@@ -58,9 +58,8 @@ import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.courtlyproject.Feature.detail.viewmodel.HomePage_vm
 import com.example.courtlyproject.R
-import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.model.SportPlace
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
 
 
 @Composable
@@ -70,7 +69,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
 
     LaunchedEffect(authState) {
         when(authState){
-            is com.example.courtlyproject.feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
+            is com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
             else -> Unit
 
         }

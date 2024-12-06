@@ -2,11 +2,11 @@ package com.example.courtlyproject.di
 
 import android.app.Application
 import android.content.Context
-import com.example.courtlyproject.auth.data.repository.AuthRepositoryImplemen
-import com.example.courtlyproject.auth.domain.repository.AuthRepository
-import com.example.courtlyproject.auth.domain.usecase.LoginWithEmailUseCase
-import com.example.courtlyproject.auth.domain.usecase.LoginWithGoogleUseCase
-import com.example.courtlyproject.auth.domain.usecase.SignupUserUseCase
+import com.example.courtlyproject.Feature.auth.data.repository.AuthRepositoryImplemen
+import com.example.courtlyproject.Feature.auth.domain.repository.AuthRepository
+import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithEmailUseCase
+import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithGoogleUseCase
+import com.example.courtlyproject.Feature.auth.domain.usecase.SignupUserUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

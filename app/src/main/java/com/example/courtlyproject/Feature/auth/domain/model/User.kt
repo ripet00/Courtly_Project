@@ -1,4 +1,4 @@
-package com.example.courtlyproject.auth.domain.model
+package com.example.courtlyproject.Feature.auth.domain.model
 
 data class User(
     val username : String,

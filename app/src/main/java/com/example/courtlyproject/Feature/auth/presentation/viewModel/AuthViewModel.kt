@@ -1,12 +1,12 @@
-package com.example.courtlyproject.feature.auth.presentation.viewModel
+package com.example.courtlyproject.Feature.auth.presentation.viewModel
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.courtlyproject.auth.domain.model.User
-import com.example.courtlyproject.auth.domain.usecase.LoginWithEmailUseCase
-import com.example.courtlyproject.auth.domain.usecase.LoginWithGoogleUseCase
-import com.example.courtlyproject.auth.domain.usecase.SignupUserUseCase
+import com.example.courtlyproject.Feature.auth.domain.model.User
+import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithEmailUseCase
+import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithGoogleUseCase
+import com.example.courtlyproject.Feature.auth.domain.usecase.SignupUserUseCase
 import com.example.courtlyproject.util.AppResult
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel

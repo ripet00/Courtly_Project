@@ -1,6 +1,6 @@
-package com.example.courtlyproject.auth.domain.repository
+package com.example.courtlyproject.Feature.auth.domain.repository
 
-import com.example.courtlyproject.auth.domain.model.User
+import com.example.courtlyproject.Feature.auth.domain.model.User
 import com.example.courtlyproject.util.AppResult
 
 interface AuthRepository {

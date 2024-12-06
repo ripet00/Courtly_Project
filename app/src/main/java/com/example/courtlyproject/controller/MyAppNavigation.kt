@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.courtlyproject.feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.view.SplashScreen
 import com.example.courtlyproject.Feature.auth.presentation.view.LoginPage
 import com.example.courtlyproject.MainActivity
