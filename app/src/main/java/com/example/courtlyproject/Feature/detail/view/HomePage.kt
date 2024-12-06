@@ -148,9 +148,12 @@ fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .background(Color(0xFF6FCF97)) // Warna latar menu
+                .clip(RoundedCornerShape(16.dp))
+
         ) {
             DropdownMenuItem(
                 text = { Text("Profil", color = Color.White) },
+
                 onClick = {
                     expanded = false
                     // Aksi untuk "Profil"
@@ -209,7 +212,7 @@ fun SearchBar() {
 @Composable
 fun SportSelection() {
     // List olahraga
-    val sports = listOf("Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
+    val sports = listOf("Semua","Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
     // State untuk olahraga yang dipilih
     var selectedSport by remember { mutableStateOf(sports[0]) }
 
