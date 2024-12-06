@@ -1,7 +1,5 @@
 package com.example.courtlyproject.controller
 
-import SignupPage
-import WelcomingPage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -13,6 +11,8 @@ import com.example.courtlyproject.view.SplashScreen
 import com.example.courtlyproject.Feature.auth.presentation.view.LoginPage
 import com.example.courtlyproject.MainActivity
 import androidx.navigation.navArgument
+import com.example.courtlyproject.Feature.auth.presentation.view.SignupPage
+import com.example.courtlyproject.Feature.auth.presentation.view.WelcomingPage
 import com.example.courtlyproject.Feature.detail.view.HomeScreen
 import com.example.courtlyproject.Feature.detail.view.detailcontent
 import com.example.courtlyproject.user.presentation.view.PesananScreen
