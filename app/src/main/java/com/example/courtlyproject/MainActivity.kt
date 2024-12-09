@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.courtlyproject.controller.MyAppNavigation
 import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.di.AppModule
 import com.example.courtlyproject.ui.theme.CourtlyProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold (){ innerpadding ->
                         val authViewModel : AuthViewModel by viewModels()
+
 
                         MyAppNavigation(modifier = Modifier.padding(innerpadding), authViewModel = authViewModel )
                     }

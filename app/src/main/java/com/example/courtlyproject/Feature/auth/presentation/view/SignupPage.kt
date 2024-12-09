@@ -2,6 +2,7 @@ package com.example.courtlyproject.Feature.auth.presentation.view
 
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
-import com.example.courtlyproject.Feature.auth.domain.model.User
+import com.example.courtlyproject.Feature.user.domain.model.User
 import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState
 import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -71,9 +72,9 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
     // Handle Authentication State
     LaunchedEffect(authState.value) {
         when (authState.value) {
-            is AuthState.Authenticated -> {
+            is AuthState.UnAuthenticated -> {
                 Toast.makeText(context, "Signup berhasil!", Toast.LENGTH_SHORT).show()
-                navController.navigate("login") // Navigate to login or another page
+                navController.navigate("login")
             }
             is AuthState.Error -> {
                 Toast.makeText(context, (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()

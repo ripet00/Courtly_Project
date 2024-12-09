@@ -1,6 +1,6 @@
 package com.example.courtlyproject.Feature.auth.domain.usecase
 
-import com.example.courtlyproject.Feature.auth.domain.model.User
+import com.example.courtlyproject.Feature.user.domain.model.User
 import com.example.courtlyproject.Feature.auth.domain.repository.AuthRepository
 import com.example.courtlyproject.util.AppResult
 
