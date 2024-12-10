@@ -45,7 +45,7 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
         }
         composable("userprofile") {
             if (userId != null) {
-                UserProfileScreen( navController,viewModel = viewModel, userId = userId)
+                UserProfileScreen( navController,viewModel = viewModel, userId = userId, authViewModel = authViewModel)
             }
         }
         composable("user order") {

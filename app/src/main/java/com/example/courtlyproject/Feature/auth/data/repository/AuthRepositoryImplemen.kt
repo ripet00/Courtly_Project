@@ -29,7 +29,7 @@ class AuthRepositoryImplemen(firebaseAuth: FirebaseAuth, firestore: FirebaseFire
             val userData = mapOf(
                 "username" to user.username,
                 "email" to user.email,
-                "phone" to user.nomorHp
+                "nomorHp" to user.nomorHp
             )
 
             // Simpan data pengguna di Firestore

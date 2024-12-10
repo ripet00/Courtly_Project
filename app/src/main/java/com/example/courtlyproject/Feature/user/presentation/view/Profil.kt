@@ -34,12 +34,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.Feature.user.presentation.viewModel.UserProfileViewModel
 import com.example.courtlyproject.R
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewModel, userId: String) {
+fun UserProfileScreen(navController: NavController, authViewModel: AuthViewModel, viewModel: UserProfileViewModel, userId: String) {
     val userState by viewModel.userState.collectAsState()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -59,10 +60,11 @@ fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewMo
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
+                    Spacer(modifier = Modifier.height(32.dp))
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.clickable {
-                            navController.currentBackStackEntry
+                            navController.popBackStack()
                         }
                     ){
                         Icon(
@@ -86,7 +88,7 @@ fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewMo
                             modifier = Modifier.size(80.dp)
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.nand), // Ganti dengan foto profil
+                                painter = painterResource(id = R.drawable.profile), // Ganti dengan foto profil
                                 contentDescription = "Profile Picture",
                                 contentScale = ContentScale.Crop
                             )
@@ -108,7 +110,7 @@ fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewMo
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
                     // Personal Information Section
                     Text(
@@ -131,7 +133,7 @@ fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewMo
                             thickness = 1.dp,
                             modifier = Modifier.width(400.dp)
                         )
-                        PersonalInfoItem(Icons.Default.Phone, label = "Nomor telepon", value = "kurang tau kenapa nda kebaca")
+                        PersonalInfoItem(Icons.Default.Phone, label = "Nomor telepon", value = user.nomorHp)
                         Divider(
                             color = Color.White,
                             thickness = 1.dp,
@@ -153,13 +155,13 @@ fun UserProfileScreen(navController: NavController, viewModel: UserProfileViewMo
                             shape = RoundedCornerShape(8.dp))
                         .padding(4.dp)) {
                         // Logout and Delete Account Buttons
-                        ActionButton(Icons.Default.ExitToApp, label = "Keluar", color = Color.Black)
+                        ActionButton(Icons.Default.ExitToApp, label = "Keluar", color = Color.Black, action = {authViewModel.signout()} )
                         Divider(
                             color = Color.White,
                             thickness = 1.dp,
                             modifier = Modifier.width(400.dp)
                         )
-                        ActionButton(Icons.Default.Delete, label = "Hapus akun", color = Color.Red)
+                        ActionButton(Icons.Default.Delete, label = "Hapus akun", color = Color.Red, action = {})
                     }
                 }
             }
@@ -190,11 +192,14 @@ fun PersonalInfoItem(icon: ImageVector, label: String, value: String) {
 }
 
 @Composable
-fun ActionButton(icon: ImageVector, label: String, color: Color) {
+fun ActionButton(icon: ImageVector, label: String, color: Color,action: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 16.dp),
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clickable {
+                action()
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
