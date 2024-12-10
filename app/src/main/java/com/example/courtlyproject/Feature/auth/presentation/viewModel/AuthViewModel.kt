@@ -3,7 +3,7 @@ package com.example.courtlyproject.Feature.auth.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.courtlyproject.Feature.auth.domain.model.User
+import com.example.courtlyproject.Feature.user.domain.model.User
 import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithEmailUseCase
 import com.example.courtlyproject.Feature.auth.domain.usecase.LoginWithGoogleUseCase
 import com.example.courtlyproject.Feature.auth.domain.usecase.SignupUserUseCase
@@ -65,7 +65,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val result = signupUserUseCase(user)
             _authState.value = if (result is AppResult.Success) {
-                AuthState.Authenticated
+                AuthState.UnAuthenticated
             } else {
                 AuthState.Error((result as AppResult.Failure).exception?.message ?: "Signup failed")
             }
@@ -79,9 +79,9 @@ class AuthViewModel @Inject constructor(
 }
 
 sealed class AuthState {
-    object Idle : AuthState()
-    object Loading : AuthState()
-    object Authenticated : AuthState()
-    object UnAuthenticated : AuthState()
+    data object Idle : AuthState()
+    data object Loading : AuthState()
+    data object Authenticated : AuthState()
+    data object UnAuthenticated : AuthState()
     data class Error(val message: String) : AuthState()
 }

@@ -2,6 +2,7 @@ package com.example.courtlyproject.user.presentation.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,27 +24,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.courtlyproject.Feature.detail.view.top
 import com.example.courtlyproject.R
 
 @Composable
 fun PesananScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        HeaderSection()
+        HeaderSection(navController)
         TitleSection()
         OrderList()
     }
 }
 
 @Composable
-fun HeaderSection() {
+fun HeaderSection(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +58,10 @@ fun HeaderSection() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(start = 16.dp, top=48.dp)
+                .clickable {
+                    navController.popBackStack()
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -70,7 +74,8 @@ fun HeaderSection() {
             Text(
                 text = "Kembali",
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Black
+                color = Color.Black,
+                fontWeight = FontWeight.Bold
             )
         }
 
@@ -87,12 +92,12 @@ fun TitleSection() {
     ) {
         Text(
             text = "Pesanan",
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
         Text(
-            text = "Semua riwayat pesanan yang pernah kamu lakukan ada disini!",
+            text = "Riwayat pesanan yang pernah anda lakukan ada disini!",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
@@ -114,7 +119,7 @@ fun OrderItem(
             .padding(16.dp)
             .background(
                 color = Color.White,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
             )
             .padding(12.dp), // Padding dalam kontainer
         verticalAlignment = Alignment.CenterVertically

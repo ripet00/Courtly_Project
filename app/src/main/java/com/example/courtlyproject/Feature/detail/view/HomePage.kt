@@ -134,7 +134,7 @@ fun ProfileMenu(navController: NavController,authViewModel: AuthViewModel) {
     Box {
         IconButton(onClick = { expanded = !expanded }) {
             Image(
-                painter = painterResource(R.drawable.nand), // Ganti dengan resource foto profil Anda
+                painter = painterResource(R.drawable.profile), // Ganti dengan resource foto profil Anda
                 contentDescription = "Profile Picture",
                 modifier = Modifier
                     .size(40.dp)
