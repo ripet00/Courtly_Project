@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState
 import com.example.courtlyproject.Feature.detail.viewmodel.HomePage_vm
 import com.example.courtlyproject.R
 import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
@@ -69,7 +70,7 @@ fun HomeScreen(navController: NavController,authViewModel: AuthViewModel) {
 
     LaunchedEffect(authState) {
         when(authState){
-            is com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
+            is AuthState.UnAuthenticated -> navController.navigate("login")
             else -> Unit
 
         }
@@ -325,21 +326,32 @@ fun SportPlaceItem(place: SportPlace, navController: NavController, lapanganId: 
 
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = place.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                    Text(
+                        text = place.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${place.kategori}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Text(
+                        text = "${place.kategori}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFD700))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = "${place.rating}")
-                        Spacer(modifier = Modifier.width(15.dp))
-
+                        Text(text = "Rp.${place.price.toString()} / jam",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Gray)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFFFD700),
+                                modifier = Modifier.size(20.dp))
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(text = "${place.rating}", style = MaterialTheme.typography.bodyMedium)
+                        }
                     }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = "Rp.${place.price.toString()}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
-                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }

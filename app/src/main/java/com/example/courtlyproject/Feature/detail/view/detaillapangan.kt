@@ -2,12 +2,12 @@ package com.example.courtlyproject.Feature.detail.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,12 +16,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +43,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.Feature.detail.viewmodel.detaillapangan_vm
@@ -40,7 +54,6 @@ import com.example.courtlyproject.R
 fun detailcontent(
     navController: NavController,
     lapanganId: String
-
 ) {
     val viewModel: detaillapangan_vm = viewModel()
     LaunchedEffect(key1 = Unit) {
@@ -49,268 +62,311 @@ fun detailcontent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(0.dp)
+            .padding(16.dp)
             .background(Color.White)
     ) {
-        top(viewModel)
-        Contain()
+        Spacer(modifier = Modifier.height(32.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .clickable {
+                    navController.popBackStack()
+                }
+        ){
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowLeft,
+                contentDescription = null,
+                modifier = Modifier.size(32.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = "Kembali", style = MaterialTheme.typography.titleLarge)
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        Detail(viewModel)
+        Spacer(modifier = Modifier.height(16.dp))
+        Jadwal()
     }
-
 }
-
 @Composable
-fun top(
-    detaillapanganViewModel: detaillapangan_vm = viewModel()
-) {
+fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
     val getDetail = detaillapanganViewModel.state.value
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(0.dp),
-    ) {
-
-        Column(
-            modifier = Modifier,
-//                .width(100.dp)
-//                .height(100.dp)
-//                .padding(20.dp)
-//                .background(Color.Gray),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-
-
+    Column(
+            modifier = Modifier
+                .fillMaxWidth(),
         ) {
             Image(
-                painter = painterResource(id = R.drawable.stadium),
+                painter = painterResource(id = R.drawable.gor),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth() // Mengisi lebar layar
-                    .size(300.dp) // Menentukan tinggi gambar
-                    .padding(top = 0.dp) // Pastikan tidak ada padding top yang menghalangi
-                , // Padding di bawah gambar
-                contentScale = ContentScale.Crop
-            )
-            Box(
-                modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
-                    .background(Color(0xFFD9D9D9))
+                    .size(200.dp)
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 0.dp, bottomEnd = 0.dp)),
+                contentScale = ContentScale.Crop,
+            )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                .background(Color(0xFFD9D9D9))
+                .padding(16.dp),
 
-            ) {
+        ) {
+            Row {
                 Column(
-
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(8.dp)
                 ) {
-                    Row {
-                        Column(
-                            horizontalAlignment = Alignment.Start,
-                            modifier = Modifier
-                                .padding(8.dp)
-                        ) {
-                            Text(
-                                text = getDetail.nama,
-                                style = MaterialTheme.typography.headlineMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Black
-                                ),
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-                            Text(
-                                text = getDetail.kategori.toString(),
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontWeight = FontWeight.Normal,
-                                    color = Color.Gray
-                                ),
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-                        }
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .padding(8.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                // Display the address
-                                Text(
-                                    text = getDetail.alamat,
-                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = Color.Black
-                                    ),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                // Display the schedule
-                                Text(
-                                    text = getDetail.jadwal,
-                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = Color.Black
-                                    ),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
-                        }
-
-                    }
-
-
+                    Text(
+                        text = getDetail.nama,
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = getDetail.kategori.toString(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .padding(8.dp)
+                ) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
+                        Icon(
+                            Icons.Default.LocationOn,
+                            contentDescription = null,
                             modifier = Modifier
-                                .padding(8.dp)
-                                .weight(0.4f),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(32.dp))
-                                    .background(Color.White)
-                                    .padding(8.dp),
-                                horizontalArrangement = Arrangement.Center,
-
-                                ) {
-                                Icon(
-                                    Icons.Default.Star,
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFD700)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(text = "${getDetail.rating}")
-                            }
-                        }
-                        Column(
+                                .size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = getDetail.alamat,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
-                                .padding(8.dp)
-                                .weight(0.6f),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            // Display the pr
-                            Text(
-                                text = "Rp.${getDetail.harga.toString()} /jam",
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Black
-                                ),
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            )
-                        }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Icon(
+                            Icons.Default.DateRange,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = getDetail.jadwal,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                        )
                     }
                 }
+            }
+            Row(
+                modifier = Modifier
+                    .padding(start = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Rp.${getDetail.harga.toString()} /jam",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier
+                )
+                Spacer(modifier = Modifier.width(120.dp))
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color.White)
+                        .padding(vertical = 6.dp, horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Icon(
+                        Icons.Default.Star,
+                        contentDescription = null,
+                        tint = Color(0xFFFFD700)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${getDetail.rating}")
+                }
+            }
+        }
+    }
+}
 
+
+@Composable
+fun Jadwal() {
+    var selectedTimeSlots by remember { mutableStateOf(listOf("13:00", "14:00")) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .background(Color.White, RoundedCornerShape(16.dp))
+    ) {
+        // Date and Location Section
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            DropdownItem("19")
+            DropdownItem("Jun")
+
+            Divider(
+                color = Color.Gray,
+                modifier = Modifier
+                    .height(40.dp)
+                    .width(1.dp)
+            )
+
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        Icons.Default.ThumbUp, // Replace with your icon resource
+                        contentDescription = null,
+                        tint = Color(0xFFFFA000)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Lapangan Teknik",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Text(
+                    text = "Lapangan basket kayu",
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "Rp150.000/jam",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Time Slots Section
+        TimeSlots(
+            slots = listOf("09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"),
+            selectedSlots = selectedTimeSlots,
+            onSelect = { selectedTimeSlots = it }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Summary Section
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = "Waktu : ${selectedTimeSlots.first()} - ${selectedTimeSlots.last()}",
+                fontSize = 14.sp,
+                color = Color(0xFF4CAF50)
+            )
+            Text(
+                text = "Total : Rp300.000/Jam",
+                fontSize = 14.sp,
+                color = Color(0xFF4CAF50)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Pesan Button
+        Button(
+            onClick = { /* Handle action */ },
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(8.dp),
+            colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
+        ) {
+            Text(text = "Pesan", color = Color.White)
+        }
     }
 }
 
 @Composable
-fun  Contain(
-
-) {
-    Box(
+fun DropdownItem(label: String) {
+    Row(
         modifier = Modifier
-
-            .background(Color(0xFFD9D9D9)) // Warna latar belakang abu-abu
+            .background(Color(0xFFF5F5F5), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            // Bagian atas (gambar dan teks besar)
+        Text(text = label, fontSize = 16.sp, color = Color.Black)
+        Icon(
+            Icons.Default.ArrowDropDown, // Replace with your dropdown icon resource
+            contentDescription = null
+        )
+    }
+}
+
+@Composable
+fun TimeSlots(slots: List<String>, selectedSlots: List<String>, onSelect: (List<String>) -> Unit) {
+    val slotStates = remember { mutableStateListOf<Boolean>().apply { addAll(slots.map { false }) } }
+
+    slots.forEachIndexed { index, time ->
+        slotStates[index] = selectedSlots.contains(time)
+    }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        for (i in slots.indices step 4) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center, // Mengatur posisi gambar dan teks secara horizontal
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.stadium),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Gray)
-                        .padding(8.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Column(
-                    modifier = Modifier.fillMaxHeight(),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(
-                        text = "Stadium XYZ", // Nama lapangan
-                        style = MaterialTheme.typography.headlineMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                slots.subList(i, (i + 4).coerceAtMost(slots.size)).forEachIndexed { subIndex, slot ->
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(40.dp)
+                            .background(
+                                if (slotStates[i + subIndex]) Color(0xFF4CAF50) else Color(0xFFEEEEEE),
+                                RoundedCornerShape(8.dp)
+                            )
+                            .padding(8.dp)
+                            .clickable {
+                                slotStates[i + subIndex] = !slotStates[i + subIndex]
+                                onSelect(
+                                    slots.filterIndexed { j, _ -> slotStates[j] }
+                                )
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = slot,
+                            color = if (slotStates[i + subIndex]) Color.White else Color.Gray,
+                            fontSize = 14.sp
                         )
-                    )
-                    Text(
-                        text = "Location: City Center", // Alamat lapangan
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.Gray
-                        ),
-                        modifier = Modifier.padding(top = 4.dp)
-                    )
+                    }
                 }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Bagian kedua (rating dan harga)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White)
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFD700)) // Icon bintang
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "4.5", // Rating lapangan
-                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black)
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(1f)) // Memberikan jarak di tengah
-
-                Text(
-                    text = "Rp. 100,000/jam", // Harga lapangan
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    ),
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
             }
         }
     }

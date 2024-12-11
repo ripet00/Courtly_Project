@@ -39,7 +39,6 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.courtlyproject.Feature.detail.view.top
 import com.example.courtlyproject.Feature.review.domain.model.Review
 
 @Composable
