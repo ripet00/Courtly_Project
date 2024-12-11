@@ -337,7 +337,7 @@ fun SportPlaceItem(place: SportPlace, navController: NavController, lapanganId: 
                         color = Color.Gray)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "Rp.${place.price.toString()} / jam",
+                        Text(text = "Rp.${place.price.toString()}k / jam",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Gray)
                         Spacer(modifier = Modifier.width(10.dp))

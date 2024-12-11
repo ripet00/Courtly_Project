@@ -111,7 +111,7 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
                 .padding(16.dp),
 
         ) {
-            Row {
+            Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
@@ -119,7 +119,7 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
                 ) {
                     Text(
                         text = getDetail.nama,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         modifier = Modifier.padding(bottom = 8.dp)
@@ -132,7 +132,7 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(20.dp))
+//                Spacer(modifier = Modifier.width(20.dp))
                 Column(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.SpaceBetween,
@@ -187,13 +187,13 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Rp.${getDetail.harga.toString()} /jam",
+                    text = "Rp.${getDetail.harga.toString()}k /jam",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     modifier = Modifier
                 )
-                Spacer(modifier = Modifier.width(120.dp))
+                Spacer(modifier = Modifier.width(130.dp))
                 Row(
                     modifier = Modifier
                         .clip(RoundedCornerShape(32.dp))
@@ -215,10 +215,12 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
     }
 }
 
-
 @Composable
-fun Jadwal() {
+fun Jadwal(detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
+    val getDetail = detaillapanganViewModel.state.value
     var selectedTimeSlots by remember { mutableStateOf(listOf("13:00", "14:00")) }
+    val pricePerHour = getDetail.harga
+    val totalPrice = calculateTotalPriceFromDuration(selectedTimeSlots, pricePerHour)
 
     Column(
         modifier = Modifier
@@ -229,44 +231,22 @@ fun Jadwal() {
         // Date and Location Section
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            DropdownItem("19")
-            DropdownItem("Jun")
-
+            Text(
+                text = "Pilih Jadwal",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold
+            )
             Divider(
                 color = Color.Gray,
                 modifier = Modifier
                     .height(40.dp)
                     .width(1.dp)
             )
-
-            Column {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        Icons.Default.ThumbUp, // Replace with your icon resource
-                        contentDescription = null,
-                        tint = Color(0xFFFFA000)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "Lapangan Teknik",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Text(
-                    text = "Lapangan basket kayu",
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "Rp150.000/jam",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            DropdownItem("19")
+            DropdownItem("Jun")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -281,35 +261,49 @@ fun Jadwal() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Summary Section
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = "Waktu : ${selectedTimeSlots.first()} - ${selectedTimeSlots.last()}",
-                fontSize = 14.sp,
-                color = Color(0xFF4CAF50)
-            )
-            Text(
-                text = "Total : Rp300.000/Jam",
-                fontSize = 14.sp,
-                color = Color(0xFF4CAF50)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Pesan Button
-        Button(
-            onClick = { /* Handle action */ },
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(8.dp),
-            colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
-        ) {
-            Text(text = "Pesan", color = Color.White)
+        Row {
+            Column(
+                modifier = Modifier,
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(
+                    text = "Waktu : ${selectedTimeSlots.first()} - ${selectedTimeSlots.last()}",
+                    fontSize = 14.sp,
+                    color = Color(0xFF4CAF50)
+                )
+                Text(
+                    text = "Total : ${totalPrice}k",
+                    fontSize = 14.sp,
+                    color = Color(0xFF4CAF50)
+                )
+            }
+            Spacer(modifier = Modifier.width(100.dp))
+            Button(
+                onClick = { /* Handle action */ },
+                modifier = Modifier,
+                colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
+            ) {
+                Text(text = "Pesan", color = Color.White)
+            }
         }
     }
+}
+fun calculateTotalPriceFromDuration(selectedTimeSlots: List<String>, pricePerHour: Int): Int {
+    if (selectedTimeSlots.isEmpty()) return 0
+
+    // Ambil waktu pertama dan terakhir
+    val startTime = selectedTimeSlots.first()
+    val endTime = selectedTimeSlots.last()
+
+    // Konversi waktu ke format jam
+    val startHour = startTime.substringBefore(":").toInt()
+    val endHour = endTime.substringBefore(":").toInt()
+
+    // Hitung durasi dalam jam
+    val duration = endHour - startHour
+
+    // Total harga
+    return duration * pricePerHour
 }
 
 @Composable
@@ -322,7 +316,7 @@ fun DropdownItem(label: String) {
     ) {
         Text(text = label, fontSize = 16.sp, color = Color.Black)
         Icon(
-            Icons.Default.ArrowDropDown, // Replace with your dropdown icon resource
+            Icons.Default.ArrowDropDown,
             contentDescription = null
         )
     }
@@ -368,6 +362,7 @@ fun TimeSlots(slots: List<String>, selectedSlots: List<String>, onSelect: (List<
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
