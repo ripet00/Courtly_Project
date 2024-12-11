@@ -2,6 +2,7 @@ package com.example.courtlyproject.Feature.review.presentation.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,16 +40,18 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.courtlyproject.Feature.review.domain.model.Review
 
 @Composable
-fun ReviewScreen() {
+fun ReviewScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(top = 32.dp)
     ) {
         // Header section
-        HeaderSection()
+        HeaderSection(navController)
         Spacer(modifier = Modifier.height(8.dp))
         Divider(
             color = Color.LightGray,
@@ -74,9 +77,16 @@ fun ReviewScreen() {
 }
 
 @Composable
-fun HeaderSection() {
+fun HeaderSection(navController: NavController) {
     Column (modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)){
-        Row (verticalAlignment = Alignment.CenterVertically){
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .clickable {
+                    navController.popBackStack()
+                }
+        ){
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "backNavIcon",
@@ -232,9 +242,9 @@ val sampleReviews = listOf(
     Review("raishaaawww", "13 Jan 2024", 5, "Uwaaaaaa, Ak td Ktm Cwo GANTEEENNNGG BANGETTTT, WAJIB BINTANG 5555555!!!!!")
 )
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-
-private fun ReviewScreenPreview(){
-    ReviewScreen()
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//
+//private fun ReviewScreenPreview(){
+//    ReviewScreen()
+//}

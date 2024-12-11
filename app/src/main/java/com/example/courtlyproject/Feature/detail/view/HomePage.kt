@@ -210,7 +210,7 @@ fun SearchBar() {
 @Composable
 fun SportSelection() {
     // List olahraga
-    val sports = listOf("Semua","Futsal", "Bulutangkis", "Basket", "tenis","minisoccer","Volly")
+    val sports = listOf("Semua","Futsal", "Badminton", "Basket", "tenis","minisoccer","Volly")
     // State untuk olahraga yang dipilih
     var selectedSport by remember { mutableStateOf(sports[0]) }
 

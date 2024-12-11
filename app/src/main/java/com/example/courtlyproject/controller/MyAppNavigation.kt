@@ -15,6 +15,8 @@ import com.example.courtlyproject.Feature.auth.presentation.view.SignupPage
 import com.example.courtlyproject.Feature.auth.presentation.view.WelcomingPage
 import com.example.courtlyproject.Feature.detail.view.HomeScreen
 import com.example.courtlyproject.Feature.detail.view.detailcontent
+import com.example.courtlyproject.Feature.review.presentation.view.ReviewScreen
+import com.example.courtlyproject.Feature.transaction.presentation.view.PaymentSuccessScreen
 import com.example.courtlyproject.di.AppModule
 import com.example.courtlyproject.user.presentation.view.PesananScreen
 import com.example.courtlyproject.user.presentation.view.UserProfileScreen
@@ -50,6 +52,12 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
         }
         composable("user order") {
             PesananScreen( navController)
+        }
+        composable("PaymentSuccess") {
+            PaymentSuccessScreen( navController)
+        }
+        composable("reviewpage") {
+            ReviewScreen( navController)
         }
         composable(
             route = "detail/{lapanganId}",

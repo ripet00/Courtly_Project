@@ -82,13 +82,13 @@ fun detailcontent(
             Text(text = "Kembali", style = MaterialTheme.typography.titleLarge)
         }
         Spacer(modifier = Modifier.height(32.dp))
-        Detail(viewModel)
+        Detail(viewModel,navController)
         Spacer(modifier = Modifier.height(16.dp))
-        Jadwal()
+        Jadwal(navController = navController)
     }
 }
 @Composable
-fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
+fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() , navController: NavController) {
     val getDetail = detaillapanganViewModel.state.value
     Column(
             modifier = Modifier
@@ -198,7 +198,10 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
                     modifier = Modifier
                         .clip(RoundedCornerShape(32.dp))
                         .background(Color.White)
-                        .padding(vertical = 6.dp, horizontal = 16.dp),
+                        .padding(vertical = 6.dp, horizontal = 16.dp)
+                        .clickable {
+                            navController.navigate("reviewpage")
+                        },
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -216,7 +219,7 @@ fun Detail( detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
 }
 
 @Composable
-fun Jadwal(detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
+fun Jadwal(detaillapanganViewModel: detaillapangan_vm = viewModel(),navController: NavController ) {
     val getDetail = detaillapanganViewModel.state.value
     var selectedTimeSlots by remember { mutableStateOf(listOf("13:00", "14:00")) }
     val pricePerHour = getDetail.harga
@@ -279,7 +282,9 @@ fun Jadwal(detaillapanganViewModel: detaillapangan_vm = viewModel() ) {
             }
             Spacer(modifier = Modifier.width(100.dp))
             Button(
-                onClick = { /* Handle action */ },
+                onClick = {
+                    navController.navigate("PaymentSuccess")
+                },
                 modifier = Modifier,
                 colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
             ) {
