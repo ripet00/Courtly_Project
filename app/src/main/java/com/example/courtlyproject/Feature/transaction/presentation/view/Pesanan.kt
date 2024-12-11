@@ -1,8 +1,11 @@
 package com.example.courtlyproject.user.presentation.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,14 +16,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,15 +48,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.courtlyproject.Feature.detail.view.top
 import com.example.courtlyproject.R
 
 @Composable
 fun PesananScreen(navController: NavController) {
+    var showPopup by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderSection(navController)
         TitleSection()
-        OrderList()
+        OrderList(navController = navController, onShowPopup = { showPopup = true })
+    }
+
+    // Popup Global
+    if (showPopup) {
+        RatingPopup(
+            onDismiss = { showPopup = false },
+            onSubmit = { rating, review ->
+                showPopup = false
+                Log.d("Rating", "Rating: $rating, Review: $review")
+            },
+            navController = navController
+        )
     }
 }
 
@@ -51,7 +80,7 @@ fun HeaderSection(navController: NavController) {
             .fillMaxWidth()
             .height(120.dp)
             .background(
-                color = Color(0xFFB4D7B4), // Warna hijau header
+                color = Color(0xFF79B791), // Warna hijau header
                 shape = RoundedCornerShape(bottomStart = 60.dp) // Lekukan sudut
             )
     ) {
@@ -105,13 +134,51 @@ fun TitleSection() {
 }
 
 @Composable
+fun OrderList(navController: NavController, onShowPopup: () -> Unit) {
+    Column {
+        OrderItem(
+            image = painterResource(id = R.drawable.stadium),
+            title = "Lapangan Teknik",
+            subtitle = "Lapangan Basket Kayu",
+            date = "Rabu, 19 Jun 2024",
+            status = "Belum main",
+            statusColor = Color.Red,
+            navController = navController,
+            onShowPopup = onShowPopup
+        )
+        OrderItem(
+            image = painterResource(id = R.drawable.stadium),
+            title = "Lapangan Teknik",
+            subtitle = "Lapangan Basket Kayu",
+            date = "Rabu, 17 Jan 2024",
+            status = "Berhasil",
+            statusColor = Color.Blue,
+            navController = navController,
+            onShowPopup = onShowPopup
+        )
+        OrderItem(
+            image = painterResource(id = R.drawable.stadium),
+            title = "Lapangan Teknik",
+            subtitle = "Lapangan Basket Kayu",
+            date = "Selasa, 23 Apr 2024",
+            status = "Sedang berlangsung",
+            statusColor = Color.Green,
+            navController = navController,
+            onShowPopup = onShowPopup
+        )
+    }
+}
+
+@Composable
 fun OrderItem(
     image: Painter,
     title: String,
     subtitle: String,
     date: String,
     status: String,
-    statusColor: Color
+    statusColor: Color,
+    navController: NavController,
+    onShowPopup: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -121,7 +188,7 @@ fun OrderItem(
                 color = Color.White,
                 shape = RoundedCornerShape(12.dp),
             )
-            .padding(12.dp), // Padding dalam kontainer
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -139,61 +206,116 @@ fun OrderItem(
             Text(text = subtitle, color = Color.Gray, fontSize = 14.sp)
             Text(text = date, color = Color.Gray, fontSize = 12.sp)
         }
-        Column(
-            horizontalAlignment = Alignment.End
-        ) {
+        Column(horizontalAlignment = Alignment.End) {
             Text(
                 text = status,
                 color = statusColor,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
-            TextButton(onClick = { /* Aksi beri rating */ }) {
-                Text(
-                    text = "Beri rating",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray
-                )
+            Button(
+                onClick = onShowPopup,
+                modifier = Modifier,
+                colors = ButtonDefaults.buttonColors(Color(0xFF79B791))
+            ) {
+                Text(text = "Beri Rating", color = Color.White)
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OrderList() {
-    Column {
-        OrderItem(
-            image = painterResource(id = R.drawable.stadium),
-            title = "Lapangan Teknik",
-            subtitle = "Lapangan Basket Kayu",
-            date = "Rabu, 19 Jun 2024",
-            status = "Belum main",
-            statusColor = Color.Red
-        )
-        OrderItem(
-            image = painterResource(id = R.drawable.stadium),
-            title = "Lapangan Teknik",
-            subtitle = "Lapangan Basket Kayu",
-            date = "Rabu, 17 Jan 2024",
-            status = "Berhasil",
-            statusColor = Color.Blue
-        )
-        OrderItem(
-            image = painterResource(id = R.drawable.stadium),
-            title = "Lapangan Teknik",
-            subtitle = "Lapangan Basket Kayu",
-            date = "Selasa, 23 Apr 2024",
-            status = "Sedang berlangsung",
-            statusColor = Color.Green
-        )
+fun RatingPopup(
+    onDismiss: () -> Unit,
+    onSubmit: (Int, String) -> Unit,
+    navController: NavController
+) {
+    var rating by remember { mutableStateOf(0) }
+    var review by remember { mutableStateOf("") }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.5f))
+            .clickable(onClick = onDismiss, indication = null, interactionSource = remember { MutableInteractionSource() }),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFF82D4AA))
+                .padding(16.dp)
+                .fillMaxWidth(0.8f)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                // Title
+                Text(
+                    text = "Gimana mainnya?",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Ceritakan pengalaman olahraga kamu!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Rating Stars
+                Row(horizontalArrangement = Arrangement.Center) {
+                    (1..5).forEach { index ->
+                        Icon(
+                            imageVector = if (index <= rating) Icons.Default.Star else Icons.Outlined.Star,
+                            contentDescription = "Rating $index",
+                            tint = Color(0xFFFFD700),
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clickable { rating = index }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Input Field
+                OutlinedTextField(
+                    value = review,
+                    onValueChange = { review = it },
+                    label = { Text("Bagikan pengalaman kamu selama bermain!", fontSize = 15.sp) },
+                    shape = RoundedCornerShape(32.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Submit Button
+                Button(
+                    onClick = {
+                        onSubmit(rating, review)
+                        navController.navigate("reviewpage")
+                              },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White),
+                    colors = ButtonDefaults.buttonColors(
+                        Color.White,
+                        contentColor = Color(0xFF82D4AA)
+                    )
+                ) {
+                    Text(text = "Kirim", fontWeight = FontWeight.Bold)
+                }
+            }
+        }
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//private fun pesananPreview(){
-//    PesananScreen()
-//}
 
 
 

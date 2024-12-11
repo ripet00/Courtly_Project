@@ -32,10 +32,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 @Composable
-fun PaymentSuccessScreen() {
+fun PaymentSuccessScreen(navController: NavController) {
 
     Box(
         modifier = Modifier
@@ -44,15 +45,8 @@ fun PaymentSuccessScreen() {
             .padding(20.dp),
 //        contentAlignment = Alignment.Center
     ) {
-        Column {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "icon Close",
-                modifier = Modifier.size(40.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp, top = 48.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
@@ -118,7 +112,9 @@ fun PaymentSuccessScreen() {
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = { /* Handle action */ },
+                            onClick = {
+                                navController.navigate("homepage")
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF46036)),
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -136,7 +132,7 @@ fun PaymentSuccessScreen() {
         }
 
     }
-}
+
 
 @Composable
 fun PaymentDetailRow(label: String, value: String) {
@@ -158,8 +154,8 @@ fun PaymentDetailRow(label: String, value: String) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun paymenSuccessPreview(){
-    PaymentSuccessScreen()
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun paymenSuccessPreview(){
+//    PaymentSuccessScreen()
+//}
