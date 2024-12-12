@@ -21,15 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.courtlyproject.R
 
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentMethodsModal() {
+fun PaymentMethodsModal(navController: NavController) {
     val paymentMethods = listOf(
         PaymentMethod("BCA Mobile", "Saldo: Rp99.000.000", R.drawable.ic_bca),
         PaymentMethod("BNI Mobile Banking", "Saldo: Rp50.000", R.drawable.ic_bni),
@@ -53,7 +52,7 @@ fun PaymentMethodsModal() {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 paymentMethods.forEach { method ->
-                    PaymentMethodItem(method = method)
+                    PaymentMethodItem(method = method, navController)
                     Divider(modifier = Modifier.padding(vertical = 8.dp))
                 }
             }
@@ -64,11 +63,13 @@ fun PaymentMethodsModal() {
 
 
 @Composable
-fun PaymentMethodItem(method: PaymentMethod) {
+fun PaymentMethodItem(method: PaymentMethod, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Handle klik metode pembayaran */ }
+            .clickable {
+                navController.navigate("payment_success")
+            }
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
