@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.courtlyproject.R
 
+@Preview
 @Composable
 fun PaymentSuccessScreen() {
 
