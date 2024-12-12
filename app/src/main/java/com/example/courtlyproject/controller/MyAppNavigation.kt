@@ -14,6 +14,7 @@ import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewMo
 import com.example.courtlyproject.Feature.detail.view.HomeScreen
 import com.example.courtlyproject.Feature.detail.view.detailcontent
 import com.example.courtlyproject.Feature.review.presentation.view.ReviewScreen
+import com.example.courtlyproject.Feature.transaction.presentation.view.DetailPesananPopup
 import com.example.courtlyproject.Feature.transaction.presentation.view.PaymentMethodsModal
 import com.example.courtlyproject.Feature.transaction.presentation.view.PaymentSuccessScreen
 import com.example.courtlyproject.MainActivity
@@ -63,6 +64,10 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
         composable("reviewpage") {
             ReviewScreen( navController)
         }
+        composable("detailpesanan") {
+            DetailPesananPopup( navController)
+        }
+
         composable(
             route = "detail/{lapanganId}",
             arguments = listOf(navArgument("lapanganId") {

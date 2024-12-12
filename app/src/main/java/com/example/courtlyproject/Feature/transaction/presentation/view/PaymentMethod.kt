@@ -68,7 +68,7 @@ fun PaymentMethodItem(method: PaymentMethod, navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                navController.navigate("payment_success")
+                navController.navigate("detailpesanan")
             }
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically

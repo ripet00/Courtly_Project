@@ -283,7 +283,7 @@ fun Jadwal(detaillapanganViewModel: detaillapangan_vm = viewModel(),navControlle
             Spacer(modifier = Modifier.width(100.dp))
             Button(
                 onClick = {
-                    navController.navigate("PaymentSuccess")
+                    navController.navigate("PaymentMethod")
                 },
                 modifier = Modifier,
                 colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
