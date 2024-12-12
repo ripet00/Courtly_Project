@@ -6,17 +6,20 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.view.SplashScreen
 import com.example.courtlyproject.Feature.auth.presentation.view.LoginPage
+import com.example.courtlyproject.MainActivity
+import androidx.navigation.navArgument
 import com.example.courtlyproject.Feature.auth.presentation.view.SignupPage
 import com.example.courtlyproject.Feature.auth.presentation.view.WelcomingPage
-import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.example.courtlyproject.Feature.detail.view.HomeScreen
 import com.example.courtlyproject.Feature.detail.view.detailcontent
-import com.example.courtlyproject.MainActivity
+import com.example.courtlyproject.Feature.review.presentation.view.ReviewScreen
+import com.example.courtlyproject.Feature.transaction.presentation.view.PaymentSuccessScreen
 import com.example.courtlyproject.di.AppModule
+import com.example.courtlyproject.user.presentation.view.PesananScreen
 import com.example.courtlyproject.user.presentation.view.UserProfileScreen
-import com.example.courtlyproject.view.SplashScreen
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -47,9 +50,15 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
                 UserProfileScreen( navController,viewModel = viewModel, userId = userId, authViewModel = authViewModel)
             }
         }
-//        composable("user order") {
-//            PesananScreen( navController)
-//        }
+        composable("user order") {
+            PesananScreen( navController)
+        }
+        composable("PaymentSuccess") {
+            PaymentSuccessScreen( navController)
+        }
+        composable("reviewpage") {
+            ReviewScreen( navController)
+        }
         composable(
             route = "detail/{lapanganId}",
             arguments = listOf(navArgument("lapanganId") {

@@ -42,11 +42,17 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun UserProfileScreen(navController: NavController, authViewModel: AuthViewModel, viewModel: UserProfileViewModel, userId: String) {
     val userState by viewModel.userState.collectAsState()
+    val authState by authViewModel.authState.collectAsState()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    LaunchedEffect(userId) {
+    LaunchedEffect(userId,authState) {
         userId?.let {
             viewModel.fetchUser(it)
+        }
+        when(authState){
+            is com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState.UnAuthenticated -> navController.navigate("login")
+            else -> Unit
+
         }
     }
     when{
