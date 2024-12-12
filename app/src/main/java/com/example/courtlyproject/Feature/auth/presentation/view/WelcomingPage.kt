@@ -1,4 +1,5 @@
-package com.example.courtlyproject.Feature.auth
+package com.example.courtlyproject.Feature.auth.presentation.view
+
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

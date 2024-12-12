@@ -6,25 +6,32 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
+import com.example.courtlyproject.view.SplashScreen
+import com.example.courtlyproject.Feature.auth.presentation.view.LoginPage
+import com.example.courtlyproject.MainActivity
 import androidx.navigation.navArgument
-import com.example.courtlyproject.Feature.auth.AuthViewModel
-import com.example.courtlyproject.Feature.auth.LoginPage
-import com.example.courtlyproject.Feature.auth.SignupPage
-import com.example.courtlyproject.Feature.auth.WelcomingPage
+import com.example.courtlyproject.Feature.auth.presentation.view.SignupPage
+import com.example.courtlyproject.Feature.auth.presentation.view.WelcomingPage
 import com.example.courtlyproject.Feature.detail.view.HomeScreen
 import com.example.courtlyproject.Feature.detail.view.detailcontent
-import com.example.courtlyproject.view.MainActivity
-import com.example.courtlyproject.view.SplashScreen
+import com.example.courtlyproject.di.AppModule
+import com.example.courtlyproject.user.presentation.view.PesananScreen
+import com.example.courtlyproject.user.presentation.view.UserProfileScreen
+import com.google.firebase.auth.FirebaseAuth
+
 
 @Composable
 fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
+    val userId = FirebaseAuth.getInstance().currentUser?.uid
+    val viewModel = AppModule.provideUserProfileViewModel()
 
     NavHost(navController = navController, startDestination = "splashscreen"){
         composable("splashscreen") {
             SplashScreen(navController, context = MainActivity())
         }
-        composable("welcomingpage") {
+        composable("welcoming page") {
             WelcomingPage( navController)
         }
         composable("login") {
@@ -35,6 +42,14 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
         }
         composable("homepage") {
             HomeScreen( navController,authViewModel)
+        }
+        composable("userprofile") {
+            if (userId != null) {
+                UserProfileScreen( navController,viewModel = viewModel, userId = userId, authViewModel = authViewModel)
+            }
+        }
+        composable("user order") {
+            PesananScreen( navController)
         }
         composable(
             route = "detail/{lapanganId}",

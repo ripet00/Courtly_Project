@@ -1,6 +1,8 @@
-package com.example.courtlyproject.Feature.auth
+package com.example.courtlyproject.Feature.auth.presentation.view
+
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,8 +22,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,14 +41,18 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.courtlyproject.R
+import com.example.courtlyproject.Feature.user.domain.model.User
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthState
+import com.example.courtlyproject.Feature.auth.presentation.viewModel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 @Composable
-fun SignupPage(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel) {
+fun SignupPage(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
     var email by remember { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -54,7 +60,7 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
     var nomorHp by rememberSaveable { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel.authState.collectAsState()
     val context = LocalContext.current
 
     // Google Sign-In
@@ -63,12 +69,16 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
         GoogleSignInOptions.DEFAULT_SIGN_IN
     )
 
+    // Handle Authentication State
     LaunchedEffect(authState.value) {
-        when(authState.value) {
-            is AuthState.Authenticated -> navController.navigate("homepage")
-            is AuthState.Error -> Toast.makeText(context,
-                (authState.value as AuthState.Error).message,
-                Toast.LENGTH_SHORT).show()
+        when (authState.value) {
+            is AuthState.UnAuthenticated -> {
+                Toast.makeText(context, "Signup berhasil!", Toast.LENGTH_SHORT).show()
+                navController.navigate("login")
+            }
+            is AuthState.Error -> {
+                Toast.makeText(context, (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            }
             else -> Unit
         }
     }
@@ -141,13 +151,8 @@ fun SignupPage(modifier: Modifier = Modifier, navController: NavController, auth
             Button(
                 onClick = {
                     if(password == repeatPassword){
-                        authViewModel.signup(
-                            username = username,
-                            email = email,
-                            password = password,
-                            repeatPassword = repeatPassword,
-                            nomorHp = nomorHp
-                        )
+                        val user = User(username = username, email = email, nomorHp = nomorHp, password = password, repeatPassword = repeatPassword)
+                        authViewModel.signupUser(user)
                     }else{
                         errorMessage = "Konfirmasi Password Tidak sesuai"
                     }
